@@ -276,7 +276,7 @@ for k in range(100):
     new_max = 3
     
     im = ((im-min_value)*((new_max - new_min)/(max_value-min_value)))+(new_min)
-        #normalization values within [0,1]
+        #normalization values within [-3,3]
     
 
     '''
@@ -454,43 +454,7 @@ for k in range(100):
                         #This procedure ensures our final masking will only set values to 255 (white) if they are within a disk
                         #of the windows belonging to cluster 0 or 1 appropriately
 
-        #if CL[i] == 0 :
-            
-            #IM[x:x+h,y:y+h] = 255
-                #comment out the either cluster 0 or 1 depending on our mask
-        
-        #if CL[i] == 0:
 
-            #IM[x:x+h,y:y+h] = 255  #all values in the window will be white
-
-
-    
-
-        #---------------------------------------------------------
-
-        #This is was initially for agglomerative method
-        #consisting of more than 2 clusters.  Ignore completely.
-         
-        '''       
-        
-        elif CL[j] == 2:
-        
-            colorimage[x,y] = c2
-        
-        elif CL[j] == 3:
-            colorimage[x,y] = c3
-        
-        elif CL[j] == 4:
-            colorimage[x,y] = c4
-        
-        elif CL[j] == 5:
-            colorimage[x,y] = c6
-        
-    
-        #-------------------------------------------------------------------------
-
-
-        '''
 
 
 
@@ -513,16 +477,11 @@ for k in range(100):
     #print("size of All PC  DATA:",Pcurves)
 
     
-    #scaler = MinMaxScaler()   #build Scaler model determining min max to be default: [0,1]
-    #scaler.fit(Pcurves)  #fits the data into the model
-    #Pcurves = scaler.transform(Pcurves) #transform the scaled data based on our min max values
-    #clustering = KMeans(n_clusters=2,random_state=0).fit(Pcurves)
-    
-
-
-    #clustering = AgglomerativeClustering(n_clusters= None,distance_threshold = 1500).fit(BettiArrays)
-
-    #np.savez( results_dir  + "/clusteringlabels", clustering.labels_)
+    scaler = MinMaxScaler()   #build Scaler model determining min max to be default: [0,1]
+    scaler.fit(Pcurves)  #fits the data into the model
+    Pcurves = scaler.transform(Pcurves) #transform the scaled data based on our min max values
+    clustering = KMeans(n_clusters=2,random_state=0).fit(Pcurves)
+    np.savez( results_dir  + "/clusteringlabels", clustering.labels_)
     
     
 
